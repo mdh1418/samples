@@ -151,6 +151,13 @@ foreach ($item in $workingSet) {
                     "msbuild.exe `"$projectFile`" -restore:True" `
                     | Out-File ".\run.bat"
                 }
+
+                if ($settings.publish -eq "true") {
+                    Write-Host "- Using dotnet publish"
+
+                    # Create the publish command
+                    "dotnet publish `"$projectFile`"" | Out-File ".\run.bat"
+                }
             }
 
             $result = Invoke-Expression ".\run.bat" | Out-String
